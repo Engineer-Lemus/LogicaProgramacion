@@ -1,0 +1,86 @@
+<meta charset = "utf-8">    
+
+    <h1>Desafio numeros pares 1 al 100</h1> 
+
+    <script>
+
+        function saltarLinea(){
+            document.write("<br><br>");
+        }
+
+        function escribir(frase){
+            document.write(frase);
+        }
+
+       var numerosPares = 0;    
+
+       while (numerosPares <= 98){
+         
+        numerosPares = numerosPares + 2;
+        escribir(numerosPares);
+               saltarLinea();
+               numerosPares++;
+       }
+           
+               escribir("FIN");
+               
+           
+ </script>
+
+<script>
+
+saltarLinea();
+saltarLinea();
+saltarLinea();
+
+</script>
+
+
+<meta charset = "utf-8">    
+
+    <h1>Desafio Inicio de sesion 3 intentos</h1> 
+
+    <script>
+
+        function saltarLinea(){
+            document.write("<br><br>");
+        }
+
+        function escribir(frase){
+            document.write(frase);
+        }
+      
+        
+
+    var inicioDeSesionRegistrado = "alura";
+    var contrasenhaRegistrada = "alura321";
+    var maxintentos = 3;    
+    var intentos = 1;
+
+    while (intentos <= maxintentos) {
+
+    var inicioDeSesionIngresado = prompt("Ingrese su usuario");
+    var contrasenhaIngresada = prompt("Ingrese su contraseña");
+
+    if( inicioDeSesionRegistrado == inicioDeSesionIngresado && contrasenhaRegistrada == contrasenhaIngresada ) {
+        alert("Bienvenido al sistema " + inicioDeSesionIngresado);
+        break;
+    } else { 
+        if( intentos == 3){
+
+        alert("Ha superado el número máximo de intentos. Favor intente más tarde");}
+
+        else{
+
+        alert("inicio de sesión inválido. Favor intente de nuevo");
+        
+            }
+        }
+
+         intentos++; 
+                                   }  
+
+        </script>
+
+
+

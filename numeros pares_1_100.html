@@ -1,0 +1,29 @@
+<meta charser="UTF-8">
+<h1> PROGRAMA - Calcular numeros pares del 1 al 100 </h1>
+
+<script>
+
+    function saltarlinea() {
+
+        document.write("<br><br>");
+
+    }
+
+    function imprimir(frase) {
+
+        document.write(frase);
+        saltarlinea();
+
+    }
+
+    var NumerosPares = 0;
+
+    while (NumerosPares <= 98) {
+
+        NumerosPares = NumerosPares + 2;
+        imprimir("Numeros pares: " + NumerosPares);
+    }
+
+    imprimir("FIN");
+    
+    </script>
