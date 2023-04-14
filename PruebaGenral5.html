@@ -1,0 +1,84 @@
+<meta charset0"UTF-8">
+
+<h1>JUEGO DE ADIVINANZAS</h1>
+<input>
+<button> Verificar si acertó con el secreto </button> 
+
+<script>
+
+    function saltarlinea() {
+
+        document.write("<br><br><br>");
+
+        }
+        function imprimir(frase) { 
+                
+                document.write(frase);
+                saltarlinea();
+
+            }
+        function aleatorio () {
+
+            return Math.round(Math.random()*10);
+
+            }
+        function sortearNumeros(cantidad) {
+
+            var secretos = [];
+            var contador = 1;
+        
+        while(contador<=cantidad){
+            var numeroAleatorio = aleatorio();
+            console.log(numeroAleatorio);
+             var encontrado = false;
+             if(numeroAleatorio != 0){
+                for (var posicion = 0; posicion < secretos.length; posicion ++){
+                    if (numeroAleatorio == secretos[posicion]){
+                    encontrado = true;
+                    break;
+                }
+                }
+                if (encontrado == false){
+                    secretos.push(numeroAleatorio);
+                    contador++;
+                }
+             }
+            }
+        return secretos
+        }
+    
+        var secretos = sortearNumeros(4);
+        console.log(secretos)
+
+        var input = document.querySelector("input");
+        input.focus();
+
+       function verificar(){
+
+       var localizado = false;
+
+       for(var posicion = 0; posicion < secretos.length[posicion]; posicion ++){
+           if (parseInt(input.value) == secretos[posicion])
+              localizado = true;
+              alert("Acertaste el numero secreto")
+              break;
+
+       }
+        if (localizado == false) {
+            alert("No acertaste el numero secreto") 
+        } 
+
+        input.value ="";
+        input.focus();
+
+
+
+       }
+       
+       var buttom = document.querySelector("button");
+         buttom.onclick = verificar;
+
+         </script>
+         
+
+        

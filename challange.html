@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos.css">
+    <title>Encriptador</title>
+</head>
+<body>
+    <div class="container-logo">
+        <img src="logo/alura-start.png" id="logo">
+    </div>
+    <div class="container">
+        <span style="--l: '¡En';">¡En</span>
+        <span style="--l: 'cr';">cr</span>
+        <span style="--l: 'ip';">ip</span>
+        <span style="--l: 'ta';">ta</span>
+        <span style="--l: 'dor!';">dor!</span>
+    </div>
+    <div class="text-field">
+        <textarea required class="lineUp"></textarea>
+        <label>Digite aquí</label>
+    </div>
+    <div class="buttons">
+        <a href="#" class="encript">
+            <span id="btn1-span1"></span>
+            <span id="btn1-span2"></span>
+            <span id="btn1-span3"></span>
+            <span id="btn1-span4"></span>
+            Encriptar
+        </a>
+        <a href="#" class="desencript">
+            <span id="btn2-span1"></span>
+            <span id="btn2-span2"></span>
+            <span id="btn2-span3"></span>
+            <span id="btn2-span4"></span>
+            Desencriptar
+        </a>
+
+        <a href="#" class="copy">
+            <span id="btn3-span1"></span>
+            <span id="btn3-span2"></span>
+            <span id="btn3-span3"></span>
+            <span id="btn3-span4"></span>
+            Copiar
+        </a>
+    </div>
+    <div class="switch-container">
+        <label class="text">Encriptador avanzado</label>
+        <input type="checkbox" id="switch">
+        <label for="switch" class="lbl"></label>
+    </div>
+    <a href="#" class="info">
+        <span id="btn4-span1"></span>
+        <span id="btn4-span2"></span>
+        <span id="btn4-span3"></span>
+        <span id="btn4-span4"></span>
+        Información
+    </a>
+</body>
+<script>
+    info();
+window.addEventListener('load', function () {
+    const checkbox = document.querySelector("#switch");
+    checkbox.checked = false;
+});
+
+const key = CryptoJS.enc.Hex.parse("2b7e151628aed2a6abf7158809cf4f3c");
+const iv = CryptoJS.enc.Hex.parse("000102030405060708090a0b0c0d0e0f");
+
+let cajaText = document.querySelector(".text-field textarea");
+let encriptar = document.querySelector("a.encript");
+let desencriptar = document.querySelector("a.desencript");
+let copiar = document.querySelector("a.copy");
+let checkbox = document.querySelector("#switch");
+let informacion = document.querySelector("a.info");
+cajaText.value = "";
+
+encriptar.onclick = Fencriptar;
+desencriptar.onclick = Ddesenciptar;
+informacion.onclick = info;
+copiar.onclick = copy;
+
+function copy() {
+        if (cajaText.value == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No hay nada que copiar :('
+            })
+        } else {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Copiado',
+                text: 'Copiado al portapaples',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            cajaText.select();
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+        }
+
+}
+function info() {
+    Swal.fire(
+        'Informacion',
+        'El encriptador funcionará con las reglas del desafío solamente si tienes el encriptador avanzado desactivado, de lo contrario se permitirán mayúsclas y caracteres especiales, además de con el modo avanzado el texto tendrá un cifrado más fuerte. <br><br><br>Realizado por Andrey Quesada',
+        'question'
+    )
+}
+
+function Fencriptar() {
+    let texto = cajaText.value;
+    if (texto.trim() === '') {
+        return;
+    } else {
+        if (checkbox.checked) {
+            let text_Encriptado = CryptoJS.AES.encrypt(texto, key, { iv: iv });
+            cajaText.value = text_Encriptado;
+        } else {
+
+            let textoOriginal = texto;
+            let textoMinusculas = texto.toLowerCase().replace(/[^a-z\s.,;:?!=~!@#$%^&*()_+{}\[\]\\|\:;"'<,>.\/]/g, '');
+
+            let text_Encriptado = textoMinusculas.replace(/e/g, 'enter')
+                .replace(/i/g, 'imes')
+                .replace(/a/g, 'ai')
+                .replace(/o/g, 'ober')
+                .replace(/u/g, 'ufat');
+            if (textoOriginal.replace(/[^a-z\s]/gi, '') !== textoMinusculas) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Sin el modo avanzado no podrás encriptar texto con letras mayuscúlas ni caracteres especiales.'
+                })
+                return;
+            }
+            cajaText.value = text_Encriptado;
+
+        }
+
+    }
+
+}
+function Ddesenciptar() {
+    if (checkbox.checked) {
+        let text_Encriptado = cajaText.value;
+        let text_desencriptado = CryptoJS.AES.decrypt(text_Encriptado, key, { iv: iv });
+        cajaText.value = text_desencriptado.toString(CryptoJS.enc.Utf8);
+    } else {
+        let text_Encriptado = cajaText.value;
+        let text_desencriptado = text_Encriptado.replace(/enter/g, 'e')
+            .replace(/imes/g, 'i')
+            .replace(/ai/g, 'a')
+            .replace(/ober/g, 'o')
+            .replace(/ufat/g, 'u');
+        cajaText.value = text_desencriptado;
+    }
+}
+</script>
+</html>
