@@ -1,0 +1,76 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var pantalla = document.querySelector('canvas');
+    var pincel = pantalla.getContext('2d');
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+  
+    function dibujarRectangulo(x, y, ancho, alto, color) {
+        pincel.fillStyle = color;
+        pincel.fillRect(x, y, ancho, alto);
+    }
+
+    dibujarRectangulo(0,0,50,50,'red');
+    dibujarRectangulo(50,0,50,50,'green');
+    dibujarRectangulo(100,0,50,50,'blue');
+    
+    function paletaColores(evento) {
+        var x = evento.pageX - pantalla.offsetLeft;
+        var y = evento.pageY - pantalla.offsetTop;
+        if ((x < 50) && (y < 50)) {
+            pincel.fillStyle = 'red';
+        } else if ((x < 100) && (y < 50)) {
+            pincel.fillStyle = 'green';
+        } else if ((x < 150) && (y < 50)) {
+            pincel.fillStyle = 'blue';
+        }
+    
+    }
+
+    var puedoDibujar = false;
+
+    function dibujarCirculo(evento) {
+
+        if(puedoDibujar) {
+            var x = evento.pageX - pantalla.offsetLeft;
+            var y = evento.pageY - pantalla.offsetTop;
+            pincel.fillStyle = paletaColores;
+            pincel.beginPath();
+            pincel.arc(x, y, 5, 0, 2 * 3.14);
+            pincel.fill();
+        }
+
+    }
+
+    pantalla.onmousemove = dibujarCirculo;
+
+    function habilitarDibujar() {
+
+        puedoDibujar = true;
+    }
+
+    function deshabilitarDibujar() {
+
+        puedoDibujar = false;
+    }
+    function paletaColores(evento) {
+       
+        var x = evento.pageX - pantalla.offsetLeft;
+        var y = evento.pageY - pantalla.offsetTop;
+        if ((x < 50) && (y < 50)) {
+            pincel.fillStyle = 'red';
+        } else if ((x < 100) && (y < 50)) {
+            pincel.fillStyle = 'green';
+        } else if ((x < 150) && (y < 50)) {
+            pincel.fillStyle = 'blue';
+        }
+    }
+    
+    pantalla.onmousedown = habilitarDibujar;
+
+    pantalla.onmouseup = deshabilitarDibujar;
+
+    
+
+</script>
